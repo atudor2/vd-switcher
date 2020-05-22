@@ -14,6 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NLog" Version="4.7.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\VirtualDesktopCommon\VirtualDesktopCommon.csproj" />
     <ProjectReference Include="..\VirtualDesktopSwitchApi\VirtualDesktopSwitchApi.csproj" />
   </ItemGroup>

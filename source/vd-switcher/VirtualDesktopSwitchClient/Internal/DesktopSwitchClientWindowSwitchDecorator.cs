@@ -1,4 +1,5 @@
 ﻿using System;
+using NLog;
 using VirtualDesktopCommon;
 using VirtualDesktopSwitchClient.Internal.Native;
 
@@ -7,6 +8,7 @@ namespace VirtualDesktopSwitchClient.Internal
     internal class DesktopSwitchClientWindowSwitchDecorator : IDesktopSwitchClient
     {
         private readonly IDesktopSwitchClient _client;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public DesktopSwitchClientWindowSwitchDecorator(IDesktopSwitchClient client)
         {
@@ -52,13 +54,13 @@ namespace VirtualDesktopSwitchClient.Internal
 
         private void AfterDesktopSwitch()
         {
-            WriteMessage("------------- AFTER DESKTOP SWITCH -------------");
+            Logger.Info(">>> After Desktop Switch");
 
             var windowPtr = GetWindowToSetAsForeground();
 
             if (windowPtr == IntPtr.Zero)
             {
-                WriteMessage(">> No window found to set a foreground");
+                Logger.Warn(">> No window found to set a foreground");
                 return;
             }
 
@@ -71,12 +73,12 @@ namespace VirtualDesktopSwitchClient.Internal
 
             NativeMethodsHelper.EnumerateWindows(hWnd =>
             {
-                // Condition order important -> the virtualdesktop call is a (potential) RPC so if we 
+                // Condition order important -> the VirtualDesktop call is a (potential) RPC so if we 
                 // can short circuit the check it would be better
                 var matchedWindow = IsValidWindow(hWnd) && _client.IsWindowOnCurrentDesktop(hWnd);
                 if (!matchedWindow) return true; // Carry on search
 
-                WriteMessage(() => DumpHWndTitle(hWnd));
+                Logger.Debug(() => $"Found valid window to focus: {DumpHWndTitle(hWnd)}");
 
                 windowPtr = hWnd;
                 return false;
@@ -102,36 +104,30 @@ namespace VirtualDesktopSwitchClient.Internal
         }
         private void BeforeDesktopSwitch()
         {
-            WriteMessage("------------- BEFORE DESKTOP SWITCH -------------");
+            Logger.Info(">>> Before Desktop Switch");
+
             // Set the taskbar as focused window before switching
             // This should stop window flashing on switch....
             var hWnd = NativeMethods.FindWindow("Shell_TrayWnd", null);
             if (hWnd == IntPtr.Zero)
             {
-                WriteMessage($">> FindWindow(\"Shell_TrayWnd\") returned NULL");
+                Logger.Warn($">> FindWindow(\"Shell_TrayWnd\") returned NULL - cannot focus shell window before switch");
+                return;
             }
-            else
-            {
-                SetForegroundWindow(hWnd);
-            }
-        }
 
-        private static void WriteMessage(Func<string> m)
-        {
-            WriteMessage(m());
-        }
-
-        private static void WriteMessage(string m)
-        {
-            // TODO REMOVE
-            Console.WriteLine(m);
+            Logger.Trace(() => $"Shell Window found: {hWnd.ToHexString()}");
+            SetForegroundWindow(hWnd);
         }
 
         private static void SetForegroundWindow(IntPtr hWnd)
         {
             if (!NativeMethodsHelper.ForceForegroundWindow(hWnd))
             {
-                WriteMessage($">> ForceForegroundWindow({ hWnd.ToHexString() }) returned FALSE - focus was not changed to window!");
+                Logger.Warn(() => $">> ForceForegroundWindow({ hWnd.ToHexString() }) returned FALSE - focus was not changed to window!");
+            }
+            else
+            {
+                Logger.Trace(() => $">> ForceForegroundWindow({ hWnd.ToHexString() }) returned TRUE");
             }
         }
 

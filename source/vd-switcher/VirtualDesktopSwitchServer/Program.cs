@@ -5,11 +5,15 @@ using System.Threading.Tasks;
 using WindowsDesktop;
 using Desktopswitch;
 using Grpc.Core;
+using NLog;
 
 namespace VirtualDesktopSwitchServer
 {
     public class Program
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        [STAThread]
         public static async Task Main(string[] args)
         {
             TodoFixConcurrentDictionaryMissingTypeIssue();
@@ -24,7 +28,8 @@ namespace VirtualDesktopSwitchServer
             };
             server.Start();
 
-            Console.WriteLine("Switcher server listening on port " + ApiConstants.PortNumber);
+            Logger.Info($"DesktopSwitch gRPC listening on port {ApiConstants.PortNumber}");
+
             Console.WriteLine("Press any key to stop the server...");
             Console.ReadKey();
 

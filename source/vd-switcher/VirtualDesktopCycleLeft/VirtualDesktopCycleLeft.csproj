@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -16,6 +16,12 @@
 
   <ItemGroup>
     <Compile Include="..\DesktopSwitchApplication.cs" Link="DesktopSwitchApplication.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\NLog.config" Link="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

@@ -20,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{843A4ADA-44EC-45C9-95F6-49071E557F10}"
 	ProjectSection(SolutionItems) = preProject
 		DesktopSwitchApplication.cs = DesktopSwitchApplication.cs
+		NLog.config = NLog.config
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopSwitchRight", "VirtualDesktopSwitchRight\VirtualDesktopSwitchRight.csproj", "{F7414C67-4F54-46C9-B071-E55506CCD65D}"

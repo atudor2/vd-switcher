@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Reflection;
 using Desktopswitch;
+using NLog;
 using VirtualDesktopCommon;
 using VirtualDesktopSwitchClient;
 
 public static class DesktopSwitchApplication
 {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static void Main(string[] args)
     {
         var assembly = Assembly.GetExecutingAssembly();
@@ -15,6 +17,8 @@ public static class DesktopSwitchApplication
         {
             throw new InvalidOperationException($"The Assembly {assembly.FullName} does not contain assembly-level attribute {nameof(ApplicationDesktopSwitchOperationAttribute)}");
         }
+
+        Logger.Info(() => $"Performing Desktop Switch Operation '{attr.Operation}'");
 
         var client = DesktopSwitchClientFactory.CreateDesktopSwitchClient();
 
