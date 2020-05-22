@@ -15,5 +15,7 @@ namespace VirtualDesktopSwitchClient
         bool CycleDesktopRight();
 
         bool IsWindowOnCurrentDesktop(IntPtr hWnd);
+
+        void ShutdownServer();
     }
 }

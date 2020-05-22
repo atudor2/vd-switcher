@@ -44,6 +44,11 @@ namespace VirtualDesktopSwitchClient.Internal
             return _client.IsWindowOnCurrentDesktop(hWnd);
         }
 
+        public void ShutdownServer()
+        {
+            _client.ShutdownServer();
+        }
+
         private T WrapDesktopSwitch<T>(Func<T> func)
         {
             BeforeDesktopSwitch();

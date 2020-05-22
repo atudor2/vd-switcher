@@ -19,20 +19,40 @@ namespace VirtualDesktopSwitchServer
             TodoFixConcurrentDictionaryMissingTypeIssue();
 
             SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+
+            try
+            {
+                await RunServer();
+            }
+            catch (Exception ex)
+            {
+                Logger.Fatal(ex);
+            }
+        }
+
+        private static async Task RunServer()
+        {
             await VirtualDesktopProvider.Default.Initialize();
-            
+
+            var serverService = new DesktopSwitchServer();
+
             var server = new Server
             {
-                Services = { DesktopSwither.BindService(new DesktopSwitchServer()) },
+                Services = { DesktopSwither.BindService(serverService) },
                 Ports = { new ServerPort("localhost", ApiConstants.PortNumber, ServerCredentials.Insecure) }
             };
+
+            var serverCancelToken = serverService.GetCancellationToken();
+
             server.Start();
 
             Logger.Info($"DesktopSwitch gRPC listening on port {ApiConstants.PortNumber}");
 
-            Console.WriteLine("Press any key to stop the server...");
-            Console.ReadKey();
+            serverCancelToken.WaitHandle.WaitOne(); // Block until server cancelled
 
+            Logger.Info("Server shutting down");
+
+            // ReSharper disable once MethodSupportsCancellation
             server.ShutdownAsync().Wait();
         }
 

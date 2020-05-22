@@ -10,12 +10,25 @@ public static class DesktopSwitchApplication
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static void Main(string[] args)
     {
+        try
+        {
+            DoDesktopSwitch();
+        }
+        catch (Exception ex)
+        {
+            Logger.Fatal(ex);
+        }
+    }
+
+    private static void DoDesktopSwitch()
+    {
         var assembly = Assembly.GetExecutingAssembly();
         var attr = assembly.GetCustomAttribute<ApplicationDesktopSwitchOperationAttribute>();
 
         if (attr is null)
         {
-            throw new InvalidOperationException($"The Assembly {assembly.FullName} does not contain assembly-level attribute {nameof(ApplicationDesktopSwitchOperationAttribute)}");
+            throw new InvalidOperationException(
+                $"The Assembly {assembly.FullName} does not contain assembly-level attribute {nameof(ApplicationDesktopSwitchOperationAttribute)}");
         }
 
         Logger.Info(() => $"Performing Desktop Switch Operation '{attr.Operation}'");

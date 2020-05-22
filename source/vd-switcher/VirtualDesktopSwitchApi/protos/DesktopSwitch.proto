@@ -8,7 +8,15 @@ service DesktopSwither {
 
 	// Check if hWnd is on a virtual desktop
 	rpc IsHWndOnDesktop(WindowHandle) returns (BoolResult) {}
+
+	// Check if hWnd is on a virtual desktop
+	rpc PingServer(Empty) returns (BoolResult) {}
+
+	// Stop the server
+	rpc StopServer(Empty) returns (Empty) {}
 }
+
+message Empty {}
 
 message WindowHandle {
 	int64 hWnd = 1;

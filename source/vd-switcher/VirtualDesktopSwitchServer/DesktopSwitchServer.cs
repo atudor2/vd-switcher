@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using WindowsDesktop;
 using Desktopswitch;
@@ -10,7 +11,34 @@ namespace VirtualDesktopSwitchServer
 {
     internal class DesktopSwitchServer : DesktopSwither.DesktopSwitherBase
     {
+        private readonly CancellationTokenSource _cancellationTokenSrc;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        public DesktopSwitchServer()
+        {
+            _cancellationTokenSrc = new CancellationTokenSource();
+        }
+
+        public CancellationToken GetCancellationToken()
+        {
+            return _cancellationTokenSrc.Token;
+        }
+
+        public override Task<BoolResult> PingServer(Empty request, ServerCallContext context)
+        {
+            Logger.Debug(() => "Received request: PingServer()");
+            return Task.FromResult(new BoolResult { Result = true });
+        }
+
+        public override Task<Empty> StopServer(Empty request, ServerCallContext context)
+        {
+            Logger.Debug(() => "Received request: StopServer()");
+
+            _cancellationTokenSrc.Cancel();
+
+            return Task.FromResult(new Empty());
+        }
+
         public override Task<BoolResult> IsHWndOnDesktop(WindowHandle request, ServerCallContext context)
         {
             var hWnd = new IntPtr(request.HWnd);

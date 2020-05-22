@@ -18,6 +18,15 @@ namespace VirtualDesktopSwitchClient.Internal
             _channel = new Channel("127.0.0.1", ApiConstants.PortNumber, ChannelCredentials.Insecure);
             _client = new DesktopSwither.DesktopSwitherClient(_channel);
             Logger.Trace($"Client Connection to channel {_channel.Target}");
+
+            PingServer();
+
+            Logger.Trace("Server replied to ping");
+        }
+
+        private void PingServer()
+        {
+            TraceRpcCall(() => _client.PingServer(new Empty()), "PingServer");
         }
 
         public bool SwitchDesktopLeft() => SwitchDesktop(SwitchOperationType.Left);
@@ -31,6 +40,11 @@ namespace VirtualDesktopSwitchClient.Internal
         public bool IsWindowOnCurrentDesktop(IntPtr hWnd)
         {
             return TraceRpcCall(() => _client.IsHWndOnDesktop(new WindowHandle() { HWnd = hWnd.ToInt64() }).UnwrapBoolResult(), "IsWindowOnCurrentDesktop", hWnd);
+        }
+
+        public void ShutdownServer()
+        {
+            TraceRpcCall(() => _client.StopServer(new Empty()), "StopServer");
         }
 
         private bool SwitchDesktop(SwitchOperationType operationType)
