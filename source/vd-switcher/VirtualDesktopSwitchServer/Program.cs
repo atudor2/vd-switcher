@@ -10,25 +10,21 @@ namespace VirtualDesktopSwitchServer
 {
     public class Program
     {
-        private const int Port = 50051;
-
         public static async Task Main(string[] args)
         {
             TodoFixConcurrentDictionaryMissingTypeIssue();
 
             SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
             await VirtualDesktopProvider.Default.Initialize();
-
-            Console.WriteLine($"ID: {VirtualDesktop.Current.Id}");
-
+            
             var server = new Server
             {
                 Services = { DesktopSwither.BindService(new DesktopSwitchServer()) },
-                Ports = { new ServerPort("localhost", Port, ServerCredentials.Insecure) }
+                Ports = { new ServerPort("localhost", ApiConstants.PortNumber, ServerCredentials.Insecure) }
             };
             server.Start();
 
-            Console.WriteLine("Switcher server listening on port " + Port);
+            Console.WriteLine("Switcher server listening on port " + ApiConstants.PortNumber);
             Console.WriteLine("Press any key to stop the server...");
             Console.ReadKey();
 

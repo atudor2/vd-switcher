@@ -11,7 +11,7 @@ namespace VirtualDesktopSwitchClient.Internal
 
         public DesktopSwitchClient()
         {
-            _channel = new Channel("127.0.0.1:50051", ChannelCredentials.Insecure);
+            _channel = new Channel("127.0.0.1", ApiConstants.PortNumber, ChannelCredentials.Insecure);
             _client = new DesktopSwither.DesktopSwitherClient(_channel);
         }
 
