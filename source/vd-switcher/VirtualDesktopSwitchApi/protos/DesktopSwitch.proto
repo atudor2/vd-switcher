@@ -1,0 +1,31 @@
+﻿syntax = "proto3";
+
+package desktopswitch;
+
+service DesktopSwither {
+	// Switch Desktop 
+	rpc SwitchDesktop(SwitchOperation) returns (BoolResult) {}
+
+	// Check if hWnd is on a virtual desktop
+	rpc IsHWndOnDesktop(WindowHandle) returns (BoolResult) {}
+}
+
+message WindowHandle {
+	int64 hWnd = 1;
+}
+
+
+message SwitchOperation {
+	SwitchOperationType operation = 1;
+}
+
+message BoolResult {
+	bool result = 1;
+}
+
+enum SwitchOperationType {
+	Left = 0;
+	Right = 1;
+	CycleLeft = 2;
+	CycleRight = 3;
+}
