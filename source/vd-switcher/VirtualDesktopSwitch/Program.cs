@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Desktopswitch;
 using NLog;
 using VirtualDesktopSwitchClient;
@@ -21,6 +22,8 @@ namespace VirtualDesktopSwitch
                     }
                     return;
                 }
+
+                EnableFullLogging();
 
                 var op = args[0];
                 if (!Enum.TryParse(op, true, out SwitchOperationType operation))
@@ -53,6 +56,16 @@ namespace VirtualDesktopSwitch
             {
                 Logger.Fatal(ex);
             }
+        }
+
+        private static void EnableFullLogging()
+        {
+            foreach (var rule in LogManager.Configuration.LoggingRules.Where(r => r.Targets.Any(t => t.Name == "logconsole")))
+            {
+                rule.EnableLoggingForLevel(LogLevel.Trace);
+            }
+
+            LogManager.ReconfigExistingLoggers();
         }
     }
 }
