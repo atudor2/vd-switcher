@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wrapper_applications", "wra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualDesktopStopServer", "VirtualDesktopStopServer\VirtualDesktopStopServer.csproj", "{F4E063D1-0222-4EC7-90FC-B98B4475871F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualDesktopSwitch", "VirtualDesktopSwitch\VirtualDesktopSwitch.csproj", "{0C0FB668-A1C4-4692-BFE6-88E0DBF88347}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{F4E063D1-0222-4EC7-90FC-B98B4475871F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4E063D1-0222-4EC7-90FC-B98B4475871F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4E063D1-0222-4EC7-90FC-B98B4475871F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C0FB668-A1C4-4692-BFE6-88E0DBF88347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C0FB668-A1C4-4692-BFE6-88E0DBF88347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C0FB668-A1C4-4692-BFE6-88E0DBF88347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C0FB668-A1C4-4692-BFE6-88E0DBF88347}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{93709642-9672-493E-9ED6-1A2ABF3FFD19} = {4FD06B1A-90E8-4896-B5EC-532DE38C83A9}
 		{5A03BB8B-8072-471E-B353-40ECEDE44990} = {4FD06B1A-90E8-4896-B5EC-532DE38C83A9}
 		{F4E063D1-0222-4EC7-90FC-B98B4475871F} = {4FD06B1A-90E8-4896-B5EC-532DE38C83A9}
+		{0C0FB668-A1C4-4692-BFE6-88E0DBF88347} = {4FD06B1A-90E8-4896-B5EC-532DE38C83A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {394E8869-D5B3-4090-B010-35A64EABDC61}
