@@ -4,11 +4,11 @@ using System.Text;
 
 namespace VirtualDesktopSwitchClient.Internal
 {
-    internal class DesktopSwitchClientFocusSwitchDecorator : IDesktopSwitchClient
+    internal class DesktopSwitchClientWindowSwitchDecorator : IDesktopSwitchClient
     {
         private readonly IDesktopSwitchClient _client;
 
-        public DesktopSwitchClientFocusSwitchDecorator(IDesktopSwitchClient client)
+        public DesktopSwitchClientWindowSwitchDecorator(IDesktopSwitchClient client)
         {
             _client = client;
         }
