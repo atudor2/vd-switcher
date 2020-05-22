@@ -11,16 +11,24 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopSwitchClient"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktop", "..\..\libs\VirtualDesktop\source\VirtualDesktop\VirtualDesktop.csproj", "{C514820A-972C-461F-8676-222CA1D087B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualDesktopSwitchLeft", "VirtualDesktipSwitchLeft\VirtualDesktopSwitchLeft.csproj", "{D1231F20-849F-49BA-90C5-E3AC5A580057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopSwitchLeft", "VirtualDesktopSwitchLeft\VirtualDesktopSwitchLeft.csproj", "{D1231F20-849F-49BA-90C5-E3AC5A580057}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{E0D2EC95-9F8E-48B8-8418-CB4CEC36274C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualDesktopCommon", "VirtualDesktopCommon\VirtualDesktopCommon.csproj", "{698D18F9-7830-46F0-89C5-382CA2AD29E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopCommon", "VirtualDesktopCommon\VirtualDesktopCommon.csproj", "{698D18F9-7830-46F0-89C5-382CA2AD29E6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{843A4ADA-44EC-45C9-95F6-49071E557F10}"
 	ProjectSection(SolutionItems) = preProject
 		DesktopSwitchApplication.cs = DesktopSwitchApplication.cs
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopSwitchRight", "VirtualDesktopSwitchRight\VirtualDesktopSwitchRight.csproj", "{F7414C67-4F54-46C9-B071-E55506CCD65D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopCycleLeft", "VirtualDesktopCycleLeft\VirtualDesktopCycleLeft.csproj", "{93709642-9672-493E-9ED6-1A2ABF3FFD19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopCycleRight", "VirtualDesktopCycleRight\VirtualDesktopCycleRight.csproj", "{5A03BB8B-8072-471E-B353-40ECEDE44990}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wrapper_applications", "wrapper_applications", "{4FD06B1A-90E8-4896-B5EC-532DE38C83A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +60,18 @@ Global
 		{698D18F9-7830-46F0-89C5-382CA2AD29E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{698D18F9-7830-46F0-89C5-382CA2AD29E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{698D18F9-7830-46F0-89C5-382CA2AD29E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7414C67-4F54-46C9-B071-E55506CCD65D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7414C67-4F54-46C9-B071-E55506CCD65D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7414C67-4F54-46C9-B071-E55506CCD65D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7414C67-4F54-46C9-B071-E55506CCD65D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93709642-9672-493E-9ED6-1A2ABF3FFD19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93709642-9672-493E-9ED6-1A2ABF3FFD19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93709642-9672-493E-9ED6-1A2ABF3FFD19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93709642-9672-493E-9ED6-1A2ABF3FFD19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A03BB8B-8072-471E-B353-40ECEDE44990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A03BB8B-8072-471E-B353-40ECEDE44990}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A03BB8B-8072-471E-B353-40ECEDE44990}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A03BB8B-8072-471E-B353-40ECEDE44990}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
