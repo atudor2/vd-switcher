@@ -3,11 +3,14 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using NLog;
 
 namespace VirtualDesktopSwitchClient.Internal.Native
 {
     internal static class NativeMethodsHelper
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         public static unsafe bool IsWindowCloaked(IntPtr hWnd)
         {
             // Not a cloaked window
@@ -88,8 +91,6 @@ namespace VirtualDesktopSwitchClient.Internal.Native
             bool DoForegroundWindowSet()
             {
                 var r = NativeMethods.SetForegroundWindow(hWnd);
-                //Console.WriteLine(r);
-                //Console.WriteLine(NativeMethods.SetFocus(hWnd));
                 return r;
             }
 
@@ -99,7 +100,7 @@ namespace VirtualDesktopSwitchClient.Internal.Native
             }
             catch (ThreadStateException)
             {
-                Console.WriteLine("ThreadStateException exception");
+                Logger.Warn("AttachThreadInput() call failed");
                 return DoForegroundWindowSet();
             }
         }
@@ -120,7 +121,7 @@ namespace VirtualDesktopSwitchClient.Internal.Native
                 }
                 else
                 {
-                    throw new ThreadStateException("AttachThreadInput failed.");
+                    throw new ThreadStateException("AttachThreadInput failed");
                 }
             }
             finally
