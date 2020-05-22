@@ -6,7 +6,7 @@ namespace VirtualDesktopSwitchClient
     {
         public static IDesktopSwitchClient CreateDesktopSwitchClient()
         {
-            return new DesktopSwitchClientFocusSwitchDecorator(CreateBasicDesktopSwitchClient());
+            return new DesktopSwitchClientWindowSwitchDecorator(CreateBasicDesktopSwitchClient());
         }
         public static IDesktopSwitchClient CreateBasicDesktopSwitchClient()
         {

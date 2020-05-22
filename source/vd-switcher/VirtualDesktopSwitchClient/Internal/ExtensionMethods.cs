@@ -1,4 +1,5 @@
-﻿using Desktopswitch;
+﻿using System;
+using Desktopswitch;
 
 namespace VirtualDesktopSwitchClient.Internal
 {
@@ -8,5 +9,8 @@ namespace VirtualDesktopSwitchClient.Internal
         {
             return self.Result;
         }
+
+        // TODO - Fix?
+        public static string ToHexString(this IntPtr ptr) => $"0x{ptr.ToString("X")}";
     }
 }
