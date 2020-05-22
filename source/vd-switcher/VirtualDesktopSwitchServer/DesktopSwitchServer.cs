@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using WindowsDesktop;
 using Desktopswitch;
 using Grpc.Core;
+using VirtualDesktopCommon;
 
 namespace VirtualDesktopSwitchServer
 {

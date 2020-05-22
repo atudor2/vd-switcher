@@ -1,8 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>DesktopSwitchApplication</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -12,6 +13,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\..\build\release</OutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\DesktopSwitchApplication.cs" Link="DesktopSwitchApplication.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\VirtualDesktopSwitchClient\VirtualDesktopSwitchClient.csproj" />

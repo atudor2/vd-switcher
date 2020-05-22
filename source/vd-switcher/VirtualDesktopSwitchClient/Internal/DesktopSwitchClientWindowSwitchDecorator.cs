@@ -1,4 +1,5 @@
 ﻿using System;
+using VirtualDesktopCommon;
 using VirtualDesktopSwitchClient.Internal.Native;
 
 namespace VirtualDesktopSwitchClient.Internal

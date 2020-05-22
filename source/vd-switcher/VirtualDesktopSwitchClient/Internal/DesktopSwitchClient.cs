@@ -1,6 +1,7 @@
 ﻿using System;
 using Desktopswitch;
 using Grpc.Core;
+using VirtualDesktopCommon;
 
 namespace VirtualDesktopSwitchClient.Internal
 {

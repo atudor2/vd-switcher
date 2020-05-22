@@ -15,6 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VirtualDesktopCommon\VirtualDesktopCommon.csproj" />
     <ProjectReference Include="..\VirtualDesktopSwitchApi\VirtualDesktopSwitchApi.csproj" />
   </ItemGroup>
 
