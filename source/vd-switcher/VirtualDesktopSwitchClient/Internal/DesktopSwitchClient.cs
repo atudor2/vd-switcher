@@ -18,10 +18,6 @@ namespace VirtualDesktopSwitchClient.Internal
             _channel = new Channel("127.0.0.1", ApiConstants.PortNumber, ChannelCredentials.Insecure);
             _client = new DesktopSwither.DesktopSwitherClient(_channel);
             Logger.Trace($"Client Connection to channel {_channel.Target}");
-
-            PingServer();
-
-            Logger.Trace("Server replied to ping");
         }
 
         private void PingServer()
