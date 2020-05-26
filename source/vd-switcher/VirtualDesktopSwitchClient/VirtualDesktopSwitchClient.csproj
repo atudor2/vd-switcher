@@ -14,12 +14,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ini-parser-netstandard" Version="2.5.2" />
     <PackageReference Include="NLog" Version="4.7.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\VirtualDesktopCommon\VirtualDesktopCommon.csproj" />
     <ProjectReference Include="..\VirtualDesktopSwitchApi\VirtualDesktopSwitchApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="VirtualDesktopSwitchClient.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

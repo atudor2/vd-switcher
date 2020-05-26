@@ -86,41 +86,29 @@ namespace VirtualDesktopSwitchClient.Internal.Native
             return IntPtr.Size == 4 ? NativeMethods.GetWindowLong32(hWnd, (int)nIndex) : NativeMethods.GetWindowLongPtr64(hWnd, (int)nIndex);
         }
 
-        public static bool ForceForegroundWindow(IntPtr hWnd)
+        public static T AttachedThreadInputAction<T>(IntPtr hWnd, Func<T> action, bool repeatOnFailure)
         {
-            bool DoForegroundWindowSet()
-            {
-                var r = NativeMethods.SetForegroundWindow(hWnd);
-                return r;
-            }
-
-            try
-            {
-                return AttachedThreadInputAction(hWnd, DoForegroundWindowSet);
-            }
-            catch (ThreadStateException)
-            {
-                Logger.Warn("AttachThreadInput() call failed");
-                return DoForegroundWindowSet();
-            }
-        }
-
-        public static T AttachedThreadInputAction<T>(IntPtr hWnd, Func<T> action)
-        {
-            var foreThread = NativeMethods.GetWindowThreadProcessId(hWnd, out _);
+            var foreThread = NativeMethods.GetWindowThreadProcessId(hWnd, out var pId);
             var appThread = NativeMethods.GetCurrentThreadId();
             var threadsAttached = false;
-
+            
             try
             {
                 threadsAttached = foreThread == appThread || NativeMethods.AttachThreadInput(foreThread, appThread, true);
+                
+                Logger.Trace($"AttachThreadInput() of current thread {appThread} to PID {pId}, thread ID {foreThread} retured {threadsAttached}");
 
                 if (threadsAttached)
                 {
                     return action();
                 }
-                else
+                else if (repeatOnFailure)
                 {
+                    Logger.Warn("AttachThreadInput() call failed -> repeating call outside of AttachThreadInput");
+                    return action();
+                }
+                else
+                { 
                     throw new ThreadStateException("AttachThreadInput failed");
                 }
             }

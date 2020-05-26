@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using NLog;
 using VirtualDesktopCommon;
 using VirtualDesktopSwitchClient.Internal.Native;
@@ -9,10 +12,12 @@ namespace VirtualDesktopSwitchClient.Internal
     {
         private readonly IDesktopSwitchClient _client;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly IDesktopSwitchClientWindowSwitchConfig _config;
 
-        public DesktopSwitchClientWindowSwitchDecorator(IDesktopSwitchClient client)
+        public DesktopSwitchClientWindowSwitchDecorator(IDesktopSwitchClient client, IDesktopSwitchClientWindowSwitchConfig config)
         {
             _client = client;
+            _config = config;
         }
         public void Dispose()
         {
@@ -69,7 +74,7 @@ namespace VirtualDesktopSwitchClient.Internal
                 return;
             }
 
-            SetForegroundWindow(windowPtr);
+            FocusWindow(windowPtr);
         }
 
         private IntPtr GetWindowToSetAsForeground()
@@ -83,13 +88,20 @@ namespace VirtualDesktopSwitchClient.Internal
                 var matchedWindow = IsValidWindow(hWnd) && _client.IsWindowOnCurrentDesktop(hWnd);
                 if (!matchedWindow) return true; // Carry on search
 
-                Logger.Debug(() => $"Found valid window to focus: {DumpHWndTitle(hWnd)}");
+                Logger.Debug(() => $"Found valid window to focus: {DumpHWndTitle(hWnd)} - { GetProcessForHWnd(hWnd) }");
 
                 windowPtr = hWnd;
                 return false;
             });
 
             return windowPtr;
+        }
+
+        private string GetProcessForHWnd(IntPtr hWnd)
+        {
+            var result = NativeMethods.GetWindowThreadProcessId(hWnd, out var pId);
+            var name = result == 0 ? null : Process.GetProcessById((int)pId).MainModule?.FileName;
+            return name ?? "<unknown>";
         }
 
         private static bool IsValidWindow(IntPtr hWnd)
@@ -107,8 +119,11 @@ namespace VirtualDesktopSwitchClient.Internal
 
             return true;
         }
+        
         private void BeforeDesktopSwitch()
         {
+            if (!_config.SetShellWindowFocusBeforeSwitch) return; // Nothing to do
+
             Logger.Info(">>> Before Desktop Switch");
 
             // Set the taskbar as focused window before switching
@@ -121,19 +136,61 @@ namespace VirtualDesktopSwitchClient.Internal
             }
 
             Logger.Trace(() => $"Shell Window found: {hWnd.ToHexString()}");
-            SetForegroundWindow(hWnd);
+            FocusWindow(hWnd);
         }
 
-        private static void SetForegroundWindow(IntPtr hWnd)
+        private void FocusWindow(IntPtr hWnd)
         {
-            if (!NativeMethodsHelper.ForceForegroundWindow(hWnd))
+            // Depending on config, we can either try:
+            // (0) Plain SetForegroundWindow()
+            // (2) Plain ShowWindow()
+            // (3) ShowWindow() + SetForegroundWindow()
+            // Either option can be within an AttachThreadInput call
+
+            var functions = new List<Func<IntPtr, bool>>();
+            if (_config.CallShowWindow)
             {
-                Logger.Warn(() => $">> ForceForegroundWindow({ hWnd.ToHexString() }) returned FALSE - focus was not changed to window!");
+                functions.Add(ShowWindow);
+            }
+
+            if (_config.CallSetForegroundWindow)
+            {
+                functions.Add(SetForegroundWindow);
+            }
+
+            if (!CallFocusChangeFunctions(hWnd, functions, _config.WrapCallsInAttachThreadInput))
+            {
+                Logger.Warn($">> Focus Change Request for {hWnd.ToHexString()} returned FALSE - focus was not changed to window!");
             }
             else
-            {
-                Logger.Trace(() => $">> ForceForegroundWindow({ hWnd.ToHexString() }) returned TRUE");
+            { 
+                Logger.Trace($">> Focus Change Request for {hWnd.ToHexString()} returned TRUE");
             }
+        }
+
+        private bool CallFocusChangeFunctions(IntPtr hWnd, IReadOnlyCollection<Func<IntPtr, bool>> functions, bool useAti)
+        {
+            return useAti ? NativeMethodsHelper.AttachedThreadInputAction(hWnd, () => InvokeFunctionList(functions, hWnd), true) :
+                            InvokeFunctionList(functions, hWnd);
+        }
+
+        private static bool InvokeFunctionList(IEnumerable<Func<IntPtr, bool>> functions, IntPtr hWnd)
+        {
+            return functions.Aggregate(true, (v, f) => v && f(hWnd));
+        }
+
+        private static bool SetForegroundWindow(IntPtr hWnd)
+        {
+            var r = NativeMethods.SetForegroundWindow(hWnd);
+            Logger.Trace($"SetForegroundWindow({hWnd.ToHexString()}) => {r}");
+            return r;
+        }
+
+        private static bool ShowWindow(IntPtr hWnd)
+        {
+            var r = NativeMethods.ShowWindow(hWnd, ShowWindowFlags.SW_SHOW); 
+            Logger.Trace($"ShowWindow({hWnd.ToHexString()}, 5) => {r}");
+            return r;
         }
 
         private static string DumpHWndTitle(IntPtr hWnd)
