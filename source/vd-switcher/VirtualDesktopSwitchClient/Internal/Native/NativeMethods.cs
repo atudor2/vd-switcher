@@ -81,7 +81,7 @@ namespace VirtualDesktopSwitchClient.Internal.Native
         public static extern bool BringWindowToTop(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        public static extern bool ShowWindow(IntPtr hWnd, uint nCmdShow);
+        public static extern bool ShowWindow(IntPtr hWnd, ShowWindowFlags nCmdShow);
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr SetActiveWindow(IntPtr hWnd);
