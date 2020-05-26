@@ -7,5 +7,7 @@ namespace VirtualDesktopCommon
     {
         public static string ToHexString(this IntPtr ptr) => $"0x{ptr.ToString("X")}";
         public static bool UnwrapBoolResult(this BoolResult self) => self.Result;
+
+        public static bool IsZero(this IntPtr self) => self == IntPtr.Zero;
     }
 }

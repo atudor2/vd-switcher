@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using NLog;
+using VirtualDesktopCommon;
 
 namespace VirtualDesktopSwitchClient.Internal.Native
 {
@@ -116,6 +117,16 @@ namespace VirtualDesktopSwitchClient.Internal.Native
             {
                 if (threadsAttached) NativeMethods.AttachThreadInput(foreThread, appThread, false);
             }
+        }
+
+        public static IntPtr GetFocusGlobal()
+        {
+            var result = NativeMethods.GetFocus();
+            
+            if (!result.IsZero()) return result;
+            
+            var hWnd = NativeMethods.GetForegroundWindow();
+            return !result.IsZero() ? result : AttachedThreadInputAction(hWnd, NativeMethods.GetFocus, true);
         }
     }
 }
