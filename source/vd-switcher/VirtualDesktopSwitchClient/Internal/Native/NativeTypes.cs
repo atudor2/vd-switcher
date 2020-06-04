@@ -14,6 +14,25 @@ namespace VirtualDesktopSwitchClient.Internal.Native
         public int Y;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct NativeMessage
+    {
+        public IntPtr handle;
+        public uint msg;
+        public IntPtr wParam;
+        public IntPtr lParam;
+        public uint time;
+        public POINT p;
+    }
+
+    [Flags]
+    public enum PeekMessageParams : uint
+    {
+        PM_NOREMOVE = 0x0000,
+        PM_REMOVE = 0x0001,
+        PM_NOYIELD = 0x0002
+    }
+
     [Flags]
     public enum DwmWindowAttribute : uint
     {
@@ -93,7 +112,10 @@ namespace VirtualDesktopSwitchClient.Internal.Native
 
     public enum WindowsMessage : uint
     {
-        WM_KILLFOCUS = 0x0008
+        WM_KILLFOCUS = 0x0008,
+        WM_HOTKEY = 0x0312,
+        WM_TIMER = 0x0113,
+
     }
 
     public enum ExtendedWindowStyles : long
@@ -101,21 +123,18 @@ namespace VirtualDesktopSwitchClient.Internal.Native
         WS_EX_TOOLWINDOW = 0x00000080L
     }
 
-    public enum ShowWindowFlags : int
+    [Flags]
+    public enum KeyModifiers
     {
-
-        SW_FORCEMINIMIZE = 11,
-        SW_HIDE = 0,
-        SW_MAXIMIZE = 3,
-        SW_MINIMIZE = 6,
-        SW_RESTORE = 9,
-        SW_SHOW = 5, 
-        SW_SHOWDEFAULT = 10, 
-        SW_SHOWMAXIMIZED = 3, 
-        SW_SHOWMINIMIZED = 2, 
-        SW_SHOWMINNOACTIVE = 7, 
-        SW_SHOWNA = 8, 
-        SW_SHOWNOACTIVATE = 4,
-        SW_SHOWNORMAL = 1
+        None = 0,
+        Alt = 1,
+        Control = 2,
+        Shift = 4,
+        // Either WINDOWS key was held down. These keys are labeled with the Windows logo.
+        // Keyboard shortcuts that involve the WINDOWS key are reserved for use by the
+        // operating system.
+        Windows = 8
     }
+
+    public delegate void TimerProc(IntPtr hWnd, uint uMsg, IntPtr nIDEvent, uint dwTime);
 }

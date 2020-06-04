@@ -1,4 +1,5 @@
 ﻿using VirtualDesktopSwitchClient.Internal;
+using VirtualDesktopSwitchClient.Internal.FocusChange;
 
 namespace VirtualDesktopSwitchClient
 {
@@ -6,7 +7,7 @@ namespace VirtualDesktopSwitchClient
     {
         public static IDesktopSwitchClient CreateDesktopSwitchClient()
         {
-            return new DesktopSwitchClientWindowSwitchDecorator(CreateBasicDesktopSwitchClient(), new DesktopSwitchClientWindowSwitchConfig());
+            return new DesktopSwitchClientWindowSwitchDecorator(CreateBasicDesktopSwitchClient(), new HotKeyFocusChangeMethod());
         }
         public static IDesktopSwitchClient CreateBasicDesktopSwitchClient()
         {

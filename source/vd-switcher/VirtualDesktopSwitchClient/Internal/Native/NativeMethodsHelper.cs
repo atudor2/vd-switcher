@@ -2,9 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
 using NLog;
-using VirtualDesktopCommon;
 
 namespace VirtualDesktopSwitchClient.Internal.Native
 {
@@ -85,48 +83,6 @@ namespace VirtualDesktopSwitchClient.Internal.Native
         public static IntPtr GetWindowLong(IntPtr hWnd, WindowLongIndex nIndex)
         {
             return IntPtr.Size == 4 ? NativeMethods.GetWindowLong32(hWnd, (int)nIndex) : NativeMethods.GetWindowLongPtr64(hWnd, (int)nIndex);
-        }
-
-        public static T AttachedThreadInputAction<T>(IntPtr hWnd, Func<T> action, bool repeatOnFailure)
-        {
-            var foreThread = NativeMethods.GetWindowThreadProcessId(hWnd, out var pId);
-            var appThread = NativeMethods.GetCurrentThreadId();
-            var threadsAttached = false;
-            
-            try
-            {
-                threadsAttached = foreThread == appThread || NativeMethods.AttachThreadInput(foreThread, appThread, true);
-                
-                Logger.Trace($"AttachThreadInput() of current thread {appThread} to PID {pId}, thread ID {foreThread} retured {threadsAttached}");
-
-                if (threadsAttached)
-                {
-                    return action();
-                }
-                else if (repeatOnFailure)
-                {
-                    Logger.Warn("AttachThreadInput() call failed -> repeating call outside of AttachThreadInput");
-                    return action();
-                }
-                else
-                { 
-                    throw new ThreadStateException("AttachThreadInput failed");
-                }
-            }
-            finally
-            {
-                if (threadsAttached) NativeMethods.AttachThreadInput(foreThread, appThread, false);
-            }
-        }
-
-        public static IntPtr GetFocusGlobal()
-        {
-            var result = NativeMethods.GetFocus();
-            
-            if (!result.IsZero()) return result;
-            
-            var hWnd = NativeMethods.GetForegroundWindow();
-            return !result.IsZero() ? result : AttachedThreadInputAction(hWnd, NativeMethods.GetFocus, true);
         }
     }
 }
