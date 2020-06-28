@@ -11,9 +11,9 @@ namespace VirtualDesktopSwitchClient.Internal.FocusChange
     internal class HotKeyFocusChangeMethod : IFocusChangeMethod
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private const int HotKeyId = 0x0000baba;
-        private const int HotKeyWaitTimeout = 2000;
-        private const VirtualKeyCode TempHotKey = VirtualKeyCode.F22;
+        private const int HotKeyId = 0x0000beef;
+        private const int HotKeyWaitTimeout = 1_000;
+        private const VirtualKeyCode TempHotKey = VirtualKeyCode.F23;
 
         public bool SetWindowFocusOnDesktop(IntPtr hWnd)
         {
@@ -67,6 +67,7 @@ namespace VirtualDesktopSwitchClient.Internal.FocusChange
                     {
                         case (uint)WindowsMessage.WM_TIMER:
                         case (uint)WindowsMessage.WM_HOTKEY:
+                            Logger.Trace($"Received message: {(WindowsMessage)msg.msg}");
                             return SetForegroundWindow(hWnd);
                     }
                 }
