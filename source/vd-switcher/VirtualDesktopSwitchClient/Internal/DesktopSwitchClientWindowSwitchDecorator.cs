@@ -69,11 +69,29 @@ namespace VirtualDesktopSwitchClient.Internal
 
             if (windowPtr == IntPtr.Zero)
             {
-                Logger.Warn(">> No window found to set a foreground");
-                return;
+                Logger.Warn(">> No window found to set a foreground, trying Shell Window");
+                windowPtr = FindShellWindow();
+                if (windowPtr == IntPtr.Zero)
+                {
+                    return; // Cannot do anything
+                }
             }
 
             FocusWindow(windowPtr);
+        }
+
+        private IntPtr FindShellWindow()
+        {
+            var hWnd = NativeMethods.FindWindow("Shell_TrayWnd", null);
+            if (hWnd == IntPtr.Zero)
+            {
+                Logger.Warn($">> FindWindow(\"Shell_TrayWnd\") returned NULL");
+                return IntPtr.Zero;
+            }
+
+            Logger.Trace(() => $"Shell Window found: {hWnd.ToHexString()}");
+
+            return hWnd;
         }
 
         private IntPtr GetWindowToSetAsForeground()
