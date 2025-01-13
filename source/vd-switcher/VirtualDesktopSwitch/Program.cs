@@ -32,6 +32,8 @@ namespace VirtualDesktopSwitch
                     return;
                 }
 
+                Logger.Info($"Performing switch operation: { operation }");
+
                 var client = DesktopSwitchClientFactory.CreateDesktopSwitchClient();
 
                 switch (operation)
