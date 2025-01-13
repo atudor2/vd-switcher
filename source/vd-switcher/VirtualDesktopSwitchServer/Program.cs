@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Threading;
-using System.Threading.Tasks;
 using WindowsDesktop;
 using Desktopswitch;
 using Grpc.Core;
@@ -14,15 +12,13 @@ namespace VirtualDesktopSwitchServer
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         [STAThread]
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            TodoFixConcurrentDictionaryMissingTypeIssue();
-
             SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
 
             try
             {
-                await RunServer();
+                RunServer();
             }
             catch (Exception ex)
             {
@@ -30,9 +26,9 @@ namespace VirtualDesktopSwitchServer
             }
         }
 
-        private static async Task RunServer()
+        private static void RunServer()
         {
-            await VirtualDesktopProvider.Default.Initialize();
+            VirtualDesktop.Configure();
 
             var serverService = new DesktopSwitchServer();
 
@@ -54,15 +50,6 @@ namespace VirtualDesktopSwitchServer
 
             // ReSharper disable once MethodSupportsCancellation
             server.ShutdownAsync().Wait();
-        }
-
-        private static void TodoFixConcurrentDictionaryMissingTypeIssue()
-        {
-            ///////////////////////////////////////////////////////////////////////////////////////////////////
-            ////// TODO - Find out why a missing type for ConcurrentDictionary is thrown from VirtualDesktop
-            ///////////////////////////////////////////////////////////////////////////////////////////////////
-            var d = new ConcurrentDictionary<int, int>();
-            d.AddOrUpdate(1, i => 1, (i, i1) => i);
         }
     }
 }

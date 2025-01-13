@@ -45,7 +45,7 @@ namespace VirtualDesktopSwitchServer
 
             Logger.Debug(() => $"Received request: IsHWndOnDesktop({ hWnd.ToHexString() })");
 
-            var result = VirtualDesktopHelper.IsCurrentVirtualDesktop(hWnd);
+            var result = VirtualDesktop.IsCurrentVirtualDesktop(hWnd);
             return Task.FromResult(new BoolResult { Result = result });
         }
 

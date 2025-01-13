@@ -16,11 +16,11 @@
 
   <ItemGroup>
     <PackageReference Include="NLog" Version="5.3.4" />
+    <PackageReference Include="Slions.VirtualDesktop" Version="6.6.0" />
     <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\libs\VirtualDesktop\source\VirtualDesktop\VirtualDesktop.csproj" />
     <ProjectReference Include="..\VirtualDesktopCommon\VirtualDesktopCommon.csproj" />
     <ProjectReference Include="..\VirtualDesktopSwitchApi\VirtualDesktopSwitchApi.csproj" />
   </ItemGroup>

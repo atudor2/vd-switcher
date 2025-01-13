@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29905.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopSwitchApi", "VirtualDesktopSwitchApi\VirtualDesktopSwitchApi.csproj", "{E686A9B8-C292-4429-8F11-9DF2D14EC27D}"
 EndProject
@@ -9,11 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopSwitchServer"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopSwitchClient", "VirtualDesktopSwitchClient\VirtualDesktopSwitchClient.csproj", "{5C4BA1A6-9AA6-447A-8E66-1281F8C35579}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktop", "..\..\libs\VirtualDesktop\source\VirtualDesktop\VirtualDesktop.csproj", "{C514820A-972C-461F-8676-222CA1D087B2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopSwitchLeft", "VirtualDesktopSwitchLeft\VirtualDesktopSwitchLeft.csproj", "{D1231F20-849F-49BA-90C5-E3AC5A580057}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{E0D2EC95-9F8E-48B8-8418-CB4CEC36274C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktopCommon", "VirtualDesktopCommon\VirtualDesktopCommon.csproj", "{698D18F9-7830-46F0-89C5-382CA2AD29E6}"
 EndProject
@@ -81,18 +77,6 @@ Global
 		{5C4BA1A6-9AA6-447A-8E66-1281F8C35579}.Release|x64.Build.0 = Release|Any CPU
 		{5C4BA1A6-9AA6-447A-8E66-1281F8C35579}.Release|x86.ActiveCfg = Release|Any CPU
 		{5C4BA1A6-9AA6-447A-8E66-1281F8C35579}.Release|x86.Build.0 = Release|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Debug|x64.Build.0 = Debug|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Debug|x86.Build.0 = Debug|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Release|x64.ActiveCfg = Release|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Release|x64.Build.0 = Release|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Release|x86.ActiveCfg = Release|Any CPU
-		{C514820A-972C-461F-8676-222CA1D087B2}.Release|x86.Build.0 = Release|Any CPU
 		{D1231F20-849F-49BA-90C5-E3AC5A580057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D1231F20-849F-49BA-90C5-E3AC5A580057}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1231F20-849F-49BA-90C5-E3AC5A580057}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -182,7 +166,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C514820A-972C-461F-8676-222CA1D087B2} = {E0D2EC95-9F8E-48B8-8418-CB4CEC36274C}
 		{D1231F20-849F-49BA-90C5-E3AC5A580057} = {4FD06B1A-90E8-4896-B5EC-532DE38C83A9}
 		{F7414C67-4F54-46C9-B071-E55506CCD65D} = {4FD06B1A-90E8-4896-B5EC-532DE38C83A9}
 		{93709642-9672-493E-9ED6-1A2ABF3FFD19} = {4FD06B1A-90E8-4896-B5EC-532DE38C83A9}
