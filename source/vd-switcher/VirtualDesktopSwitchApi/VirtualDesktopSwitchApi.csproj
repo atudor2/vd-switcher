@@ -1,33 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\..\build\debug</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\..\build\release</OutputPath>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="protos\DesktopSwitch.proto" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.12.1" />
-    <PackageReference Include="Grpc" Version="2.29.0" />
-    <PackageReference Include="Grpc.Core" Version="2.29.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.29.0">
+    <PackageReference Include="Google.Protobuf" Version="3.29.3" />
+    <PackageReference Include="Grpc" Version="2.46.6" />
+    <PackageReference Include="Grpc.Core" Version="2.46.6" />
+    <PackageReference Include="Grpc.Tools" Version="2.69.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <Protobuf Include="protos\DesktopSwitch.proto" />
   </ItemGroup>
-
 </Project>

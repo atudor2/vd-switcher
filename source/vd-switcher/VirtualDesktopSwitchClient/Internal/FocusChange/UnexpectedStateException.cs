@@ -8,11 +8,7 @@ namespace VirtualDesktopSwitchClient.Internal.FocusChange
         public UnexpectedStateException()
         {
         }
-
-        protected UnexpectedStateException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
-
+        
         public UnexpectedStateException(string message) : base(message)
         {
         }

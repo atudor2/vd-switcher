@@ -1,32 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <StartupObject>DesktopSwitchApplication</StartupObject>
     <ApplicationIcon />
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\..\build\debug</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\..\build\release</OutputPath>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="..\DesktopSwitchApplication.cs" Link="DesktopSwitchApplication.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="..\NLog.config" Link="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\VirtualDesktopSwitchClient\VirtualDesktopSwitchClient.csproj" />
   </ItemGroup>
-
 </Project>
